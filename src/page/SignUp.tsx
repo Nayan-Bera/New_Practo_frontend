@@ -15,7 +15,7 @@ const signUpSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string(),
-  role: z.enum(["host", "candidate"], {
+  type: z.enum(["host", "candidate"], {
     required_error: "Please select a user type",
   }),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -36,7 +36,7 @@ const SignUp = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "candidate",
+      type: "candidate",
     },
   });
 
@@ -129,7 +129,7 @@ const SignUp = () => {
               />
               <FormField
                 control={form.control}
-                name="role"
+                name="type"
                 render={({ field }) => (
                   <FormItem className="space-y-3">
                     <FormLabel>Account Type</FormLabel>

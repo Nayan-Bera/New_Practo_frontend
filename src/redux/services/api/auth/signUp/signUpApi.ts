@@ -4,14 +4,14 @@ interface SignUpRequest {
   name: string;
   email: string;
   password: string;
-  role: 'host' | 'candidate';
+  type: 'host' | 'candidate';
 }
 
 export const signUpApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signUp: builder.mutation<void, SignUpRequest>({
       query: (userData) => ({
-        url: '/signup',
+        url: '/auth/signup',
         method: 'POST',
         body: userData,
       }),

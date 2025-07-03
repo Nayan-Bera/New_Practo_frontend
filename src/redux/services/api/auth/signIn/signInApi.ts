@@ -1,5 +1,5 @@
 import { baseApi } from '../../../baseApi';
-import { IUser } from '@/types';
+import {type IUser } from '@/types';
 
 interface SignInRequest {
   email: string;
@@ -15,7 +15,7 @@ export const signInApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signIn: builder.mutation<SignInResponse, SignInRequest>({
       query: (credentials) => ({
-        url: '/signin',
+        url: '/auth/signin',
         method: 'POST',
         body: credentials,
       }),
