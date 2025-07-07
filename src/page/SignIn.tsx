@@ -193,8 +193,7 @@ const SignIn = () => {
                           Signing in...
                         </>
                       ) : (
-                        <>
-                          <LogIn className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <>                      
                           Sign In
                           <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                         </>

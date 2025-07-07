@@ -129,7 +129,7 @@ const Landing: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-white">
+      <section id="features" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
@@ -164,7 +164,7 @@ const Landing: React.FC = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <section id="how-it-works" className="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
