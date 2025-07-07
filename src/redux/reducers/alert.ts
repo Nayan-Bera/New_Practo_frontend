@@ -1,4 +1,5 @@
-import { SET_ALERT, UNSET_ALERT, AlertAction } from "../types";
+import { SET_ALERT, UNSET_ALERT } from "../types";
+import type { AlertAction } from "../types";
 
 interface AlertState {
   message: string;

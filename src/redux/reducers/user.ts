@@ -1,4 +1,5 @@
-import { SET_USER, UserAction } from "../types";
+import { SET_USER } from "../types";
+import type { UserAction } from "../types";
 
 interface User {
   _id?: string;

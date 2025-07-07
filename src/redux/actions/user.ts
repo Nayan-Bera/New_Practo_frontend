@@ -1,6 +1,4 @@
 import type { Dispatch } from "redux";
-import type { UserAction } from "../types";
-import { SET_USER } from "../types";
 import history from "../../utils/createHistory";
 import { addUser, removeUser } from "../../utils/localStorage";
 import {
@@ -10,6 +8,8 @@ import {
   useUpdatePasswordMutation,
   useUpdateUserMutation,
 } from "../services/api";
+import type { UserAction } from "../types";
+import { SET_USER } from "../types";
 
 interface SignInDetails {
   email: string;
@@ -18,7 +18,7 @@ interface SignInDetails {
 
 interface SignUpDetails extends SignInDetails {
   name: string;
-  role: "host" | "candidate";
+  type: "host" | "candidate";
 }
 
 

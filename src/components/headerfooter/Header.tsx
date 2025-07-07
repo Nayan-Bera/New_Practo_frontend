@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Edit2, LayoutDashboard, LogOut, User as UserIcon } from "lucide-react";
+import { Edit2, LayoutDashboard, LogOut, User as UserIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
@@ -36,8 +36,6 @@ const Header: React.FC<HeaderProps> = () => {
   // --- Dynamic Navbar for Landing Page ---
   const isLandingOrFeedback = location.pathname === "/" || location.pathname === "/feedback";
 
-  // Show Home button on all pages except landing and feedback
-  const showHome = !(location.pathname === "/" || location.pathname === "/feedback");
 
   // Smooth scroll to section by id
   const scrollToSection = (id: string) => {

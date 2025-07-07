@@ -22,8 +22,7 @@ import {
   Lock,
   Mail,
   Shield,
-  Sparkles,
-  LogIn
+  Sparkles
 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
