@@ -1,44 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { getUser, removeUser } from "../../utils/localStorage";
-import history from "../../utils/createHistory";
-import { LogOut } from "lucide-react";
-import WelcomeName from "../pages/profile";
-import Logo from "../../assets/images/logo.png";
-import { Button } from "../ui/button";
-import { useSignOutMutation } from "../../redux/services/api";
-import type { IAppState, IUser } from "../../types";
-import { useSelector } from "react-redux";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown, Edit2, LayoutDashboard, LogOut, User as UserIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Logo from "../../assets/images/logo.png";
+import type { IUser } from "../../types";
+import { getUser, removeUser } from "../../utils/localStorage";
+import { Button } from "../ui/button";
 
 interface HeaderProps {}
-
 const Header: React.FC<HeaderProps> = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const user = useSelector<IAppState, IUser | null>((state) => state.user);
-  const [signOutMutation] = useSignOutMutation();
+  const userData = (getUser() && getUser() !== false) ? (getUser() as { user: IUser }).user : undefined;
   const location = useLocation();
   const navigate = useNavigate();
   
-  const check: boolean =
-    history.location.pathname === "/host" ||
-    history.location.pathname === "/exam";
-
   useEffect(() => {
     if (getUser()) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
     }
-  }, [user]);
+  }, []);
 
-  const handleLogout = async () => {
-    try {
-      await signOutMutation().unwrap();
-    } catch (e) {
-      // Optionally handle error
-    }
+  const handleLogout = () => {
     removeUser();
-    history.push("/signin");
+    navigate("/signin");
   };
 
   // --- Dynamic Navbar for Landing Page ---
@@ -99,8 +91,6 @@ const Header: React.FC<HeaderProps> = () => {
           >
             Get Started
           </Button>
-
-          
         </div>
       </div>
     );
@@ -110,52 +100,51 @@ const Header: React.FC<HeaderProps> = () => {
   return (
     <div className="w-full flex items-center justify-between h-[10vh] min-h-[50px] px-5 bg-white shadow-sm">
       <div className="flex items-center gap-4">
-        {showHome && (
-          <Button
-            variant="ghost"
-            className="font-semibold text-base"
-            onClick={() => navigate("/")}
-          >
-            Home
-          </Button>
-        )}
         <img src={Logo} alt="Logo" style={{ height: "40px" }} />
+        {/* Role-based branding */}
+        {userData && (
+          <span className="ml-2 text-lg font-semibold text-indigo-700">
+            {userData.type === "host" ? "Host Portal" : "Candidate Portal"}
+          </span>
+        )}
       </div>
       <div className="flex items-center justify-end gap-4">
-        {isLogin ? (
-          <>
-            <WelcomeName />
-            {!check && (
-              <Button
-                variant="ghost"
-                onClick={() => history.push("/host")}
-                className="ml-5"
-              >
-                Dashboard
-              </Button>
-            )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleLogout}
-              className="ml-5"
-              title="Logout"
-            >
-              <LogOut className="h-5 w-5" />
-            </Button>
-          </>
+        {isLogin && userData ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 focus:outline-none">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-xl font-bold">
+                  {userData.name ? userData.name[0].toUpperCase() : <UserIcon size={24} />}
+                </div>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => navigate("/profile")}>
+                <Edit2 className="w-4 h-4 mr-2" /> Edit Profile
+              </DropdownMenuItem>
+              {userData.type === "host" && (
+                <DropdownMenuItem onClick={() => navigate("/host")}>
+                  <LayoutDashboard className="w-4 h-4 mr-2" /> Dashboard
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2" /> Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <>
             <Button
               className="w-[100px] mr-2"
-              onClick={() => history.push("/signin")}
+              onClick={() => navigate("/signin")}
             >
               Sign In
             </Button>
             <Button
               className="w-[100px]"
               variant="outline"
-              onClick={() => history.push("/signup")}
+              onClick={() => navigate("/signup")}
             >
               Sign Up
             </Button>

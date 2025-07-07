@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CandidateDashboard from "../components/dashboard/CandidateDashboard";
+import HostDashboard from "../components/dashboard/HostDashboard";
 import Layout from "../components/headerfooter";
-import CandidateResult from "../page/CandidateResult";
 import EditExam from "../page/EditExam";
 import Exam from "../page/Exam";
-import ExamJoin from "../page/ExamJoin";
 import Feedback from "../page/Feedback";
-import Host from "../page/Host";
 import HostExamJoin from "../page/HostExamJoin";
 import Landing from "../page/Landing";
 import PageNotFound from "../page/PageNotFound";
@@ -21,8 +20,9 @@ import { PrivateRoute, PublicRoute } from "./PrivateRoute";
 const AppRoutes: React.FC = () => {
   useEffect(() => {
     // Initialize socket connection if user is logged in
-    const userData = getUser();
-    if (userData && typeof userData === 'object' && 'token' in userData && userData.token) {
+    const userObj = getUser();
+    const currentUser = userObj ? userObj.user : undefined;
+    if (currentUser && typeof currentUser === 'object' && 'token' in currentUser && currentUser.token) {
       initializeSocket();
     }
   }, []);
@@ -42,14 +42,15 @@ const AppRoutes: React.FC = () => {
           </Route>
 
           {/* Private routes */}
-          <Route element={<PrivateRoute />}>
-            <Route path="/host" element={<Host />} />
-            <Route path="/joinexam" element={<ExamJoin />} />
+          <Route element={<PrivateRoute allowedRoles={["host"]} />}>
+            <Route path="/host" element={<HostDashboard />} />
             <Route path="/host/joinexam" element={<HostExamJoin />} />
             <Route path="/exam" element={<Exam />} />
             <Route path="/exam/edit" element={<EditExam />} />
             <Route path="/exam/result" element={<ViewResultHost />} />
-            <Route path="/candidate/result" element={<CandidateResult />} />
+          </Route>
+          <Route element={<PrivateRoute allowedRoles={["candidate"]} />}>
+            <Route path="/joinexam" element={<CandidateDashboard />} />
           </Route>
 
           {/* Feedback is public */}
