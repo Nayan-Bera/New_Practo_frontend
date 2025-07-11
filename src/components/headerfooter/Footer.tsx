@@ -179,7 +179,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center gap-2 text-gray-400 text-sm">
               <span>© {currentYear} Practo Exam Platform. Made with</span>
               <Heart className="w-4 h-4 text-red-500 fill-current" />
-              <span>by Nayan Kr Bera</span>
+              <span>by Nayan Kr Bera & Avik Mandal</span>
             </div>
             
             <div className="flex items-center gap-6 text-sm">
