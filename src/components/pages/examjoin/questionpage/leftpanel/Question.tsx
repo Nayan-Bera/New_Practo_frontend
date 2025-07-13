@@ -22,13 +22,6 @@ interface QuestionProps {
   examid: string;
 }
 
-interface Answer {
-  _id?: string;
-  exam?: string;
-  candidate?: string;
-  answers: number[];
-  exited?: string;
-}
 
 const Question: React.FC<QuestionProps> = ({ question, examid }) => {
   const [editAnswer] = useUpdateAnswerMutation();

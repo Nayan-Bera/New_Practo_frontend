@@ -4,10 +4,7 @@ import rootReducer from './reducers';
 import { baseApi } from './services/baseApi';
 
 const store = configureStore({
-  reducer: {
-    ...rootReducer,
-    [baseApi.reducerPath]: baseApi.reducer
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),
 });

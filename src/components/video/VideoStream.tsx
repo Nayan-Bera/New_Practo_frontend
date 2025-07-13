@@ -43,12 +43,12 @@ interface SuspiciousActivity {
 }
 
 const VideoStream: React.FC<VideoStreamProps> = ({ examId, userId, isHost }) => {
-  const [stream, setStream] = useState<MediaStream | null>(null);
+  const [_stream, setStream] = useState<MediaStream | null>(null);
   const [peers, setPeers] = useState<PeerConnection[]>([]);
   const [isReconnecting, setIsReconnecting] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
   const [automatedMonitoring, setAutomatedMonitoring] = useState(false);
-  const [analysisResults, setAnalysisResults] = useState<VideoAnalysisResult[]>([]);
+  const [_analysisResults, setAnalysisResults] = useState<VideoAnalysisResult[]>([]);
   const [suspiciousActivity, setSuspiciousActivity] = useState<SuspiciousActivity | null>(null);
   
   const userVideo = useRef<HTMLVideoElement>(null);

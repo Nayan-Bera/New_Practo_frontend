@@ -1,19 +1,18 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import {
-  Shield,
-  Mail,
-  Phone,
-  MapPin,
-  Github,
-  Twitter,
-  Linkedin,
+  ArrowUp,
   Facebook,
-  Instagram,
+  Github,
   Heart,
-  ArrowUp
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Shield,
+  Twitter
 } from "lucide-react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Footer: React.FC = () => {
   const navigate = useNavigate();

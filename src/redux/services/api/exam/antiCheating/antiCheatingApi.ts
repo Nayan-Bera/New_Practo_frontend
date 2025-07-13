@@ -34,7 +34,7 @@ export const antiCheatingApi = baseApi.injectEndpoints({
         url: `/exam/${examId}/anti-cheating-report`,
         method: 'GET',
       }),
-      providesTags: (result, error, examId) => [{ type: 'AntiCheating', id: examId }],
+      providesTags: (_result, _error, examId) => [{ type: 'Exam', id: examId }],
     }),
   }),
 });

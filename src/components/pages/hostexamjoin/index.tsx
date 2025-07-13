@@ -53,7 +53,7 @@ const HostExamJoin: React.FC = () => {
       if (!user || !user.user) return;
       
       const userData = user.user;
-      userData.type = "host";
+      userData.type = "admin";
 
       navigator.mediaDevices
         .getUserMedia({

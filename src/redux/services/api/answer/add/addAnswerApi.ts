@@ -1,5 +1,5 @@
 import { baseApi } from '../../../baseApi';
-import { Answer } from '../../../../types';
+import type { Answer } from '../../../../types';
 
 export const addAnswerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +8,7 @@ export const addAnswerApi = baseApi.injectEndpoints({
         url: `/answer/${examId}`,
         method: 'POST',
       }),
-      invalidatesTags: (result, error, examId) => [
+      invalidatesTags: (_result, _error, examId) => [
         { type: 'Answer', id: examId },
       ],
     }),

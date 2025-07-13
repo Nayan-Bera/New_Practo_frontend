@@ -8,7 +8,7 @@ export const updateAnswerApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: { answers },
       }),
-      invalidatesTags: (result, error, { examId }) => [
+      invalidatesTags: (_result, _error, { examId }) => [
         { type: 'Answer', id: examId },
       ],
     }),
@@ -19,7 +19,7 @@ export const updateAnswerApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: { exited: message },
       }),
-      invalidatesTags: (result, error, { examId }) => [
+      invalidatesTags: (_result, _error, { examId }) => [
         { type: 'Answer', id: examId },
       ],
     }),

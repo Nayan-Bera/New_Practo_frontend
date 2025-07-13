@@ -1,7 +1,8 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import type { ErrorInfo, ReactNode } from 'react';
+import { Component } from 'react';
+import { Button } from './ui/button';
+import { Card } from './ui/card';
 
 interface Props {
   children: ReactNode;

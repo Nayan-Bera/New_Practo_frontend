@@ -5,7 +5,7 @@ interface User {
   _id?: string;
   name?: string;
   email?: string;
-  role?: 'host' | 'candidate';
+  role?: 'admin' | 'candidate';
 }
 
 const initialState: User = {};
@@ -14,12 +14,15 @@ const userReducer = (
   state: User = initialState, 
   action: UserAction
 ): User => {
-  const { type, payload } = action;
+  const { type } = action;
 
   switch (type) {
     case SET_USER:
       return {
-        ...payload,
+        _id: action.payload?._id,
+        name: action.payload?.name,
+        email: action.payload?.email,
+        role: action.payload?.role === 'candidate' || action.payload?.role === 'admin' ? action.payload?.role : 'candidate',
       };
 
     default:

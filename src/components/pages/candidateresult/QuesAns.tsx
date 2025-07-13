@@ -71,7 +71,7 @@ const QuesAns: React.FC<QuesAnsProps> = ({ question, answer, idx }) => {
         </div>
 
         <ol className="list-decimal list-inside space-y-2">
-          {question.options.map((opt, optIdx) => (
+          {question.options.map((opt, _optIdx) => (
             <li key={opt._id} className="flex items-center gap-2">
               <span>{opt.option}</span>
               {checkSymbol(opt)}

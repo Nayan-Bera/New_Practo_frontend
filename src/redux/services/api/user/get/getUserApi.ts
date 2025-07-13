@@ -1,5 +1,5 @@
 import { baseApi } from '../../../baseApi';
-import { User } from '../../../../types';
+import type { User } from '../../../../types';
 import { getUser } from '../../../../../utils/localStorage';
 
 export const getUserApi = baseApi.injectEndpoints({
@@ -10,7 +10,8 @@ export const getUserApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
       transformResponse: (response: User[]) => {
-        const currentUser = getUser()?.user;
+        const userData = getUser();
+        const currentUser = userData && 'user' in userData ? userData.user : null;
         return response.filter(user => user._id !== currentUser?._id);
       },
       providesTags: ['User'],

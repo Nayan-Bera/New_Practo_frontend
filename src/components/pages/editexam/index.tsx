@@ -4,7 +4,7 @@ import history from "@/utils/createHistory";
 import ExamDetails from "./ExamDetails";
 import AddedQuestion from "./addedquestion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Exam } from "@/redux/types";
+import type { Exam } from "@/redux/types";
 
 const EditExam: React.FC = () => {
   const queryParams = new URLSearchParams(window.location.search);

@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Question as QuestionType } from "@/redux/types";
+import type { Question as QuestionType } from "@/redux/types";
 
 interface QuestionProps {
   question: QuestionType;

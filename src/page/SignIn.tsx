@@ -78,8 +78,8 @@ const SignIn = () => {
 
       await addUser({ token: response.token, user: userData });
       toast.success("Successfully signed in!");
-      if (userData.type === "host") {
-        navigate("/host");
+      if (userData.type === "admin") {
+        // handle admin logic here
       } else if (userData.type === "candidate") {
         navigate("/joinexam");
       } else {

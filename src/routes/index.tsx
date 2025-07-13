@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CandidateDashboard from "../components/dashboard/CandidateDashboard";
-import HostDashboard from "../components/dashboard/HostDashboard";
+import AdminDashboard from "../components/dashboard/AdminDashboard";
 import Layout from "../components/headerfooter";
 import EditExam from "../page/EditExam";
 import Exam from "../page/Exam";
@@ -42,9 +42,9 @@ const AppRoutes: React.FC = () => {
           </Route>
 
           {/* Private routes */}
-          <Route element={<PrivateRoute allowedRoles={["host"]} />}>
-            <Route path="/host" element={<HostDashboard />} />
-            <Route path="/host/joinexam" element={<HostExamJoin />} />
+          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/joinexam" element={<HostExamJoin />} />
             <Route path="/exam" element={<Exam />} />
             <Route path="/exam/edit" element={<EditExam />} />
             <Route path="/exam/result" element={<ViewResultHost />} />

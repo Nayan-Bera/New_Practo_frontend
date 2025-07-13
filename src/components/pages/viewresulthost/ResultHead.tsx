@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Card } from "../../ui/card";
-import { IAppState } from "../../../types";
+import type { IAppState } from "../../../types";
 
 const ResultHead: React.FC = () => {
   const currentExam = useSelector((state: IAppState) => (state.exam as any)?.currentExam);

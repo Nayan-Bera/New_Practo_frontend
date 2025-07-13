@@ -5,7 +5,7 @@ import { useGetHostUpcomingExamsQuery, useGetHostPastExamsQuery } from "../../re
 import { useGetUserListQuery } from "../../redux/services/api/user/get/getUserApi";
 import { CalendarDays, Users, Activity, PlusCircle, ListOrdered, BarChart2, Clock } from "lucide-react";
 
-const HostDashboard: React.FC = () => {
+const adminDashboard: React.FC = () => {
   const { data: upcomingExams, isLoading: loadingUpcoming, error: errorUpcoming } = useGetHostUpcomingExamsQuery();
   const { data: pastExams, isLoading: loadingPast, error: errorPast } = useGetHostPastExamsQuery();
   const { data: userList, isLoading: loadingUsers, error: errorUsers } = useGetUserListQuery();
@@ -96,4 +96,4 @@ const HostDashboard: React.FC = () => {
   );
 };
 
-export default HostDashboard; 
+export default adminDashboard; 

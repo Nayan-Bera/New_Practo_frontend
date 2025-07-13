@@ -3,7 +3,7 @@ export interface IUser {
   _id: string;
   name: string;
   email: string;
-  type: 'host' | 'candidate';
+  type: 'admin' | 'candidate';
   upcomingExams: string[];
   pastExams: string[];
   createdAt: string;

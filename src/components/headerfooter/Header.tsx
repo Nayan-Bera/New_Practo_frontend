@@ -104,12 +104,12 @@ const Header: React.FC<HeaderProps> = () => {
           <span
             className="ml-2 text-lg font-semibold text-indigo-700 tracking-wide cursor-pointer hover:underline hover:text-indigo-900 transition-colors"
             onClick={() =>
-              userData.type === "host"
-                ? navigate("/host")
+              userData.type === "admin"
+                ? navigate("/admin")
                 : navigate("/dashboard")
             }
           >
-            {userData.type === "host" ? "Host Portal" : "Candidate Portal"}
+            {userData.type === "admin" ? "Host Portal" : "Candidate Portal"}
           </span>
         )}
       </div>
@@ -127,8 +127,8 @@ const Header: React.FC<HeaderProps> = () => {
               <DropdownMenuItem onClick={() => navigate("/profile")}> 
                 <Edit2 className="w-4 h-4 mr-2" /> Edit Profile
               </DropdownMenuItem>
-              {userData.type === "host" && (
-                <DropdownMenuItem onClick={() => navigate("/host")}> 
+              {userData.type === "admin" && (
+                <DropdownMenuItem onClick={() => navigate("/admin")}> 
                   <LayoutDashboard className="w-4 h-4 mr-2" /> Dashboard
                 </DropdownMenuItem>
               )}
