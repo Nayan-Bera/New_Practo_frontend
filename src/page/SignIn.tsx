@@ -22,8 +22,7 @@ import {
   Lock,
   Mail,
   Shield,
-  Sparkles,
-  LogIn
+  Sparkles
 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -79,7 +78,13 @@ const SignIn = () => {
 
       await addUser({ token: response.token, user: userData });
       toast.success("Successfully signed in!");
-      navigate("/host");
+      if (userData.type === "admin") {
+        // handle admin logic here
+      } else if (userData.type === "candidate") {
+        navigate("/joinexam");
+      } else {
+        navigate("/"); // fallback
+      }
     } catch (error) {
       toast.error("Failed to sign in. Please check your credentials.");
     }

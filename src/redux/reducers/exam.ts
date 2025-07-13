@@ -1,13 +1,11 @@
 import {
-  SET_HOST_UPCOMING_EXAM,
-  SET_HOST_PAST_EXAM,
-  SET_UPCOMING_EXAM,
-  SET_PAST_EXAM,
   SET_CURR_EXAM,
-  ExamAction,
-  ExamState,
-  Exam
+  SET_HOST_PAST_EXAM,
+  SET_HOST_UPCOMING_EXAM,
+  SET_PAST_EXAM,
+  SET_UPCOMING_EXAM
 } from "../types";
+import type { Exam, ExamAction, ExamState } from "../types";
 
 const initialState: ExamState = {
   hostUpcoming: [],

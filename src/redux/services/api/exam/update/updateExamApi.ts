@@ -1,5 +1,5 @@
 import { baseApi } from '../../../baseApi';
-import { Question } from '../../../../types';
+import type { Question } from '../../../../types';
 
 interface UpdateExamRequest {
   title?: string;
@@ -18,7 +18,7 @@ export const updateExamApi = baseApi.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: (result, error, { examId }) => [
+      invalidatesTags: (_result, _error, { examId }) => [
         'Exam',
         { type: 'Exam', id: examId },
       ],

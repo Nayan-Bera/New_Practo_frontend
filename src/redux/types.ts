@@ -23,7 +23,7 @@ export interface User {
   _id?: string;
   name?: string;
   email?: string;
-  role?: 'host' | 'candidate';
+  role?: 'admin' | 'candidate';
 }
 
 export interface Question {

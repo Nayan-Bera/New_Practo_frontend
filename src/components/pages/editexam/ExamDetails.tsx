@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetUserListQuery, useUpdateExamMutation, useDeleteExamMutation } from "@/redux/services/api";
-import { User as ReduxUser, Exam } from "@/redux/types";
+import type { User as ReduxUser, Exam } from "@/redux/types";
 import history from "@/utils/createHistory";
 import ModelForm from "../createexamdialog/ModelForm";
 import AddQuestionModel from "./addquestion";

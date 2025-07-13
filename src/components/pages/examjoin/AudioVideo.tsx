@@ -13,13 +13,6 @@ interface AudioVideoProps {
   active: boolean;
 }
 
-interface SimplePeerCustomConfig {
-  iceServers: {
-    urls: string;
-    username?: string;
-    credential?: string;
-  }[];
-}
 
 const AudioVideo: React.FC<AudioVideoProps> = ({ active }) => {
   const queryParams = new URLSearchParams(window.location.search);

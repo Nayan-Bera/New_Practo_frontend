@@ -39,7 +39,7 @@ interface MonitoringDashboardProps {
   userId: string;
 }
 
-const MonitoringDashboard: React.FC<MonitoringDashboardProps> = ({ examId, userId }) => {
+const MonitoringDashboard: React.FC<MonitoringDashboardProps> = ({ examId, userId: _userId }) => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);

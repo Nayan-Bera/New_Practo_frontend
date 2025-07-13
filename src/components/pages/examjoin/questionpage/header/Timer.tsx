@@ -17,11 +17,11 @@ interface TimerProps {
 }
 
 const MyTimer: React.FC<MyTimerProps> = ({ expiryTimestamp, onTimeUp, onWarning }) => {
-  const { exitExam } = ExamContextConsumer();
+  const { exitExam: _exitExam } = ExamContextConsumer();
   const [isPaused, setIsPaused] = useState(false);
   const [warningsShown, setWarningsShown] = useState<Set<number>>(new Set());
 
-  const { seconds, minutes, hours, isRunning, pause, resume, restart } = useTimer({
+  const { seconds, minutes, hours, pause, resume, isRunning: _isRunning, restart: _restart } = useTimer({
     expiryTimestamp,
     onExpire: () => {
       toast.error("Time's up! Submitting exam automatically.");
@@ -107,11 +107,11 @@ const MyTimer: React.FC<MyTimerProps> = ({ expiryTimestamp, onTimeUp, onWarning 
   );
 };
 
-const Timer: React.FC<TimerProps> = ({ end, duration }) => {
-  const { exitExam } = ExamContextConsumer();
+const Timer: React.FC<TimerProps> = ({ end, duration: _duration }) => {
+  const { exitExam: _exitExam } = ExamContextConsumer();
   
   const handleTimeUp = () => {
-    exitExam("Time's up", true);
+    _exitExam("Time's up", true);
   };
 
   const handleWarning = (timeLeft: number) => {

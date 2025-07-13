@@ -1,4 +1,5 @@
-import { SET_LOADING, UNSET_LOADING, LoaderAction } from "../types";
+import { SET_LOADING, UNSET_LOADING } from "../types";
+import type { LoaderAction } from "../types";
 
 type LoaderState = number;
 

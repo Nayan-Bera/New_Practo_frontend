@@ -1,7 +1,7 @@
 import React from "react";
 import PortalWrapper from "../portal";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import type { RootState } from "../../redux/store";
 import { Loader2 } from "lucide-react";
 
 const Loader: React.FC = () => {

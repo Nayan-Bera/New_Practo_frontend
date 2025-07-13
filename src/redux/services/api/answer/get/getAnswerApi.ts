@@ -1,5 +1,5 @@
 import { baseApi } from '../../../baseApi';
-import { Answer } from '../../../../types';
+import type { Answer } from '../../../../types';
 
 export const getAnswerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +8,7 @@ export const getAnswerApi = baseApi.injectEndpoints({
         url: `/host/answers/${examId}`,
         method: 'GET',
       }),
-      providesTags: (result, error, examId) => [
+      providesTags: (_result, _error, examId) => [
         { type: 'Answer', id: examId },
       ],
     }),
@@ -19,7 +19,7 @@ export const getAnswerApi = baseApi.injectEndpoints({
         method: 'POST',
         body: candidateId ? { candidateId } : undefined,
       }),
-      providesTags: (result, error, { examId }) => [
+      providesTags: (_result, _error, { examId }) => [
         { type: 'Answer', id: examId },
       ],
     }),

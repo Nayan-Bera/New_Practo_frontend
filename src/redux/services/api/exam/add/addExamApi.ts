@@ -1,5 +1,5 @@
+import type { Question } from '../../../../types';
 import { baseApi } from '../../../baseApi';
-import { Exam, Question } from '../../../../types';
 
 interface CreateExamRequest {
   title: string;

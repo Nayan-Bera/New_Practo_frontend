@@ -26,7 +26,7 @@ const Exam: React.FC = () => {
   const [suspiciousActivities, setSuspiciousActivities] = useState<SuspiciousActivity[]>([]);
   const userData = getUser();
   const userId = userData && userData.user && userData.user._id ? userData.user._id : '';
-  const isHost = userData && userData.user && userData.user.type === 'host';
+  const isAdmin = userData && userData.user && userData.user.type === 'admin';
   const examId = 'exam123'; // This should come from route params or context
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const Exam: React.FC = () => {
     <div className="min-h-screen bg-background">
       <Toaster position="top-center" />
       <div className="container mx-auto py-4">
-        {!isHost && (
+        {!isAdmin && (
           <Card className="mb-4">
             <CardContent className="p-4">
               <VideoStream 
@@ -135,7 +135,7 @@ const Exam: React.FC = () => {
           <div className="w-1/2">
             <Card className="h-[84vh]">
               <CardContent className="p-4">
-                {isHost ? (
+                {isAdmin ? (
                   <MonitoringDashboard 
                     examId={examId}
                     userId={userId}

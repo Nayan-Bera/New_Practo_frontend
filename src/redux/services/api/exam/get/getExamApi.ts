@@ -48,7 +48,7 @@ export const getExamApi = baseApi.injectEndpoints({
         url: `/exam/${examId}`,
         method: 'GET',
       }),
-      providesTags: (result, error, examId) => [{ type: 'Exam', id: examId }],
+      providesTags: (_result, _error, examId) => [{ type: 'Exam', id: examId }],
     }),
 
     getCurrentExam: builder.query<Exam, string>({
@@ -56,7 +56,7 @@ export const getExamApi = baseApi.injectEndpoints({
         url: `/exam/current/${examId}`,
         method: 'GET',
       }),
-      providesTags: (result, error, examId) => [{ type: 'Exam', id: examId }],
+      providesTags: (_result, _error, examId) => [{ type: 'Exam', id: examId }],
     }),
 
     getRandomizedQuestions: builder.query<{ questions: Question[]; randomizationInfo: any }, string>({
@@ -64,7 +64,7 @@ export const getExamApi = baseApi.injectEndpoints({
         url: `/exam/${examId}/questions/randomized`,
         method: 'GET',
       }),
-      providesTags: (result, error, examId) => [{ type: 'Exam', id: examId }],
+      providesTags: (_result, _error, examId) => [{ type: 'Exam', id: examId }],
     }),
   }),
 });
