@@ -22,8 +22,8 @@ export {
 } from './exam/add/addExamApi';
 
 export {
-  useGetHostUpcomingExamsQuery,
-  useGetHostPastExamsQuery,
+  useGetAdminUpcomingExamsQuery,
+  useGetAdminPastExamsQuery,
   useGetUserUpcomingExamsQuery,
   useGetUserAttendedExamsQuery,
   useGetExamQuery,
@@ -55,4 +55,6 @@ export {
 // User APIs
 export {
   useGetUserListQuery,
-} from './user/get/getUserApi'; 
+} from './user/get/getUserApi';
+
+export { useGetPendingAdminsQuery, useApproveAdminMutation, useRejectAdminMutation } from './user/get/getPendingAdminsApi'; 

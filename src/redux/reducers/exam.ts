@@ -1,15 +1,15 @@
 import {
   SET_CURR_EXAM,
-  SET_HOST_PAST_EXAM,
-  SET_HOST_UPCOMING_EXAM,
   SET_PAST_EXAM,
-  SET_UPCOMING_EXAM
+  SET_UPCOMING_EXAM,
+  SET_ADMIN_UPCOMING_EXAM,
+  SET_ADMIN_PAST_EXAM
 } from "../types";
 import type { Exam, ExamAction, ExamState } from "../types";
 
 const initialState: ExamState = {
-  hostUpcoming: [],
-  hostPast: [],
+  adminUpcoming: [],
+  adminPast: [],
   upcoming: [],
   past: [],
   currentExam: {} as Exam,
@@ -22,17 +22,6 @@ const examReducer = (
   const { type, payload } = action;
 
   switch (type) {
-    case SET_HOST_UPCOMING_EXAM:
-      return {
-        ...state,
-        hostUpcoming: payload as Exam[],
-      };
-
-    case SET_HOST_PAST_EXAM:
-      return {
-        ...state,
-        hostPast: payload as Exam[],
-      };
     case SET_UPCOMING_EXAM:
       return {
         ...state,
@@ -48,6 +37,18 @@ const examReducer = (
       return {
         ...state,
         currentExam: payload as Exam,
+      };
+
+    case SET_ADMIN_UPCOMING_EXAM:
+      return {
+        ...state,
+        adminUpcoming: payload as Exam[],
+      };
+
+    case SET_ADMIN_PAST_EXAM:
+      return {
+        ...state,
+        adminPast: payload as Exam[],
       };
 
     default:

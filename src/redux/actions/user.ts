@@ -18,7 +18,7 @@ interface SignInDetails {
 
 interface SignUpDetails extends SignInDetails {
   name: string;
-  type: "host" | "candidate";
+  type: 'admin' | 'candidate';
 }
 
 

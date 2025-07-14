@@ -25,13 +25,13 @@ const Index: React.FC = () => {
     skip: !exam_id 
   });
   
-  // For now, we'll use an empty array since the host answers endpoint doesn't exist
-  // TODO: Implement the proper backend endpoint for host answers
+  // For now, we'll use an empty array since the admin answers endpoint doesn't exist
+  // TODO: Implement the proper backend endpoint for admin answers
   const answerList: AnswerData[] = [];
   
   React.useEffect(() => {
     if (!exam_id || examError) {
-      history.push("/host");
+      history.push("/admin");
     }
   }, [exam_id, examError]);
   

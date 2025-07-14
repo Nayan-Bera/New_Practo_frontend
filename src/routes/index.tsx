@@ -6,12 +6,12 @@ import Layout from "../components/headerfooter";
 import EditExam from "../page/EditExam";
 import Exam from "../page/Exam";
 import Feedback from "../page/Feedback";
-import HostExamJoin from "../page/HostExamJoin";
+import AdminExamJoin from "../page/AdminExamJoin";
 import Landing from "../page/Landing";
 import PageNotFound from "../page/PageNotFound";
 import SignIn from "../page/SignIn";
 import SignUp from "../page/SignUp";
-import ViewResultHost from "../page/ViewResultHost";
+import ViewResultAdmin from "../page/ViewResultAdmin";
 import { getUser } from "../utils/localStorage";
 import Preloader from "../utils/Preloader";
 import { initializeSocket } from "../utils/socket";
@@ -44,10 +44,10 @@ const AppRoutes: React.FC = () => {
           {/* Private routes */}
           <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
             <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/joinexam" element={<HostExamJoin />} />
+            <Route path="/admin/joinexam" element={<AdminExamJoin />} />
             <Route path="/exam" element={<Exam />} />
             <Route path="/exam/edit" element={<EditExam />} />
-            <Route path="/exam/result" element={<ViewResultHost />} />
+            <Route path="/exam/result" element={<ViewResultAdmin />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={["candidate"]} />}>
             <Route path="/joinexam" element={<CandidateDashboard />} />

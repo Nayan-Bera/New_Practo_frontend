@@ -4,7 +4,7 @@ interface SignUpRequest {
   name: string;
   email: string;
   password: string;
-  type: 'host' | 'candidate';
+  type: 'admin' | 'candidate';
 }
 
 export const signUpApi = baseApi.injectEndpoints({

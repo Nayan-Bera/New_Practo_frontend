@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import HostUpcomigAccordian from "@/components/pages/host/HostUpcomigAccordian";
-import HostPastAccordian from "@/components/pages/host/HostPastAccordian";
+import AdminUpcomigAccordian from "@/components/pages/admin/AdminUpcomigAccordian";
+import AdminPastAccordian from "@/components/pages/admin/AdminPastAccordian";
 import CreateExamDialog from "@/components/pages/createexamdialog";
 
-const Host: React.FC = () => {
+const Admin: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-4">
@@ -18,7 +18,7 @@ const Host: React.FC = () => {
                 <CreateExamDialog />
               </CardHeader>
               <CardContent className="h-[calc(84vh-5rem)] overflow-y-auto">
-                <HostUpcomigAccordian />
+                <AdminUpcomigAccordian />
               </CardContent>
             </Card>
           </div>
@@ -31,7 +31,7 @@ const Host: React.FC = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="h-[calc(84vh-5rem)] overflow-y-auto">
-                <HostPastAccordian />
+                <AdminPastAccordian />
               </CardContent>
             </Card>
           </div>
@@ -41,4 +41,4 @@ const Host: React.FC = () => {
   );
 };
 
-export default Host; 
+export default Admin; 

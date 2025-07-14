@@ -1,5 +1,5 @@
-import UserAttainedAccordian from "@/components/pages/host/UserAttainedAccordian";
-import UserUpcomingAccordian from "@/components/pages/host/UserUpcomingAccordian";
+import UserAttainedAccordian from "@/components/pages/admin/UserAttainedAccordian";
+import UserUpcomingAccordian from "@/components/pages/admin/UserUpcomingAccordian";
 import { Card, CardContent } from "@/components/ui/card";
 
 import MonitoringDashboard from "@/components/video/MonitoringDashboard";
