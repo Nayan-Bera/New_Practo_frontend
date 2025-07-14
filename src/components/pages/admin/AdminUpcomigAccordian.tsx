@@ -1,13 +1,13 @@
 import React from "react";
-import { useGetHostUpcomingExamsQuery } from "../../../redux/services/api";
+import { useGetAdminUpcomingExamsQuery } from "../../../redux/services/api";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 
-const HostUpcomigAccordian: React.FC = () => {
-  const { data: hostUpcoming = [] } = useGetHostUpcomingExamsQuery();
+const AdminUpcomingAccordian: React.FC = () => {
+  const { data: adminUpcoming = [] } = useGetAdminUpcomingExamsQuery();
   
   return (
     <div className="w-full space-y-4">
-      {hostUpcoming.map((exam, index) => (
+      {adminUpcoming.map((exam: any, index: number) => (
         <Card key={exam._id || index}>
           <CardHeader>
             <CardTitle>{exam.title}</CardTitle>
@@ -23,4 +23,4 @@ const HostUpcomigAccordian: React.FC = () => {
   );
 };
 
-export default HostUpcomigAccordian; 
+export default AdminUpcomingAccordian; 

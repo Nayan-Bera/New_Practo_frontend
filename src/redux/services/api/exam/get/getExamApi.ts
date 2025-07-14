@@ -3,9 +3,9 @@ import type { Exam, Question } from '../../../../types';
 
 export const getExamApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getHostUpcomingExams: builder.query<Exam[], void>({
+    getAdminUpcomingExams: builder.query<Exam[], void>({
       query: () => ({
-        url: '/exam/hosted/upcoming',
+        url: '/exam/admin/upcoming',
         method: 'GET',
       }),
       transformResponse: (response: Exam[]) => 
@@ -13,9 +13,9 @@ export const getExamApi = baseApi.injectEndpoints({
       providesTags: ['Exam'],
     }),
 
-    getHostPastExams: builder.query<Exam[], void>({
+    getAdminPastExams: builder.query<Exam[], void>({
       query: () => ({
-        url: '/exam/hosted/past',
+        url: '/exam/admin/past',
         method: 'GET',
       }),
       transformResponse: (response: Exam[]) => 
@@ -70,8 +70,8 @@ export const getExamApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetHostUpcomingExamsQuery,
-  useGetHostPastExamsQuery,
+  useGetAdminUpcomingExamsQuery,
+  useGetAdminPastExamsQuery,
   useGetUserUpcomingExamsQuery,
   useGetUserAttendedExamsQuery,
   useGetExamQuery,

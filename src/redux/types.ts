@@ -12,8 +12,8 @@ export const SET_ALERT = "SET_ALERT";
 export const UNSET_ALERT = "UNSET_ALERT";
 
 // Exam
-export const SET_HOST_UPCOMING_EXAM = "SET_HOST_UPCOMING_EXAM";
-export const SET_HOST_PAST_EXAM = "SET_HOST_PAST_EXAM";
+export const SET_ADMIN_UPCOMING_EXAM = "SET_ADMIN_UPCOMING_EXAM";
+export const SET_ADMIN_PAST_EXAM = "SET_ADMIN_PAST_EXAM";
 export const SET_UPCOMING_EXAM = "SET_UPCOMING_EXAM";
 export const SET_PAST_EXAM = "SET_PAST_EXAM";
 export const SET_CURR_EXAM = "SET_CURR_EXAM";
@@ -48,13 +48,13 @@ export interface Exam {
   duration: number;
   startingtime: string;
   questions: Question[];
-  host?: User;
+  admin?: User;
   candidates?: User[];
 }
 
 export interface ExamState {
-  hostUpcoming: Exam[];
-  hostPast: Exam[];
+  adminUpcoming: Exam[];
+  adminPast: Exam[];
   upcoming: Exam[];
   past: Exam[];
   currentExam: Exam;
@@ -80,8 +80,8 @@ export interface AlertAction {
 }
 
 export interface ExamAction {
-  type: typeof SET_HOST_UPCOMING_EXAM 
-    | typeof SET_HOST_PAST_EXAM 
+  type: typeof SET_ADMIN_UPCOMING_EXAM 
+    | typeof SET_ADMIN_PAST_EXAM 
     | typeof SET_UPCOMING_EXAM 
     | typeof SET_PAST_EXAM 
     | typeof SET_CURR_EXAM;

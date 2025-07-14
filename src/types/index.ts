@@ -4,6 +4,14 @@ export interface IUser {
   name: string;
   email: string;
   type: 'admin' | 'candidate';
+  education: string;
+  college: string;
+  university: string;
+  department: string;
+  course: string;
+  designation: string;
+  profilePicture?: string;
+  isApproved: boolean;
   upcomingExams: string[];
   pastExams: string[];
   createdAt: string;

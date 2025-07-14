@@ -1,13 +1,13 @@
 import React from "react";
-import { useGetHostPastExamsQuery } from "../../../redux/services/api";
+import { useGetAdminPastExamsQuery } from "../../../redux/services/api";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 
-const HostPastAccordian: React.FC = () => {
-  const { data: hostPast = [] } = useGetHostPastExamsQuery();
+const AdminPastAccordian: React.FC = () => {
+  const { data: adminPast = [] } = useGetAdminPastExamsQuery();
   
   return (
     <div className="w-full space-y-4">
-      {hostPast.map((exam, index) => (
+      {adminPast.map((exam: any, index: number) => (
         <Card key={exam._id || index}>
           <CardHeader>
             <CardTitle>{exam.title}</CardTitle>
@@ -23,4 +23,4 @@ const HostPastAccordian: React.FC = () => {
   );
 };
 
-export default HostPastAccordian; 
+export default AdminPastAccordian; 

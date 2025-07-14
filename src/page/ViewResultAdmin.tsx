@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import history from "@/utils/createHistory";
 import { Card, CardContent } from "@/components/ui/card";
-import Result from "@/components/pages/viewresulthost";
+import Result from "@/components/pages/viewresultAdmin";
 
-const ViewResultHost: React.FC = () => {
+const ViewResultAdmin: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-4">
@@ -29,4 +29,4 @@ const ViewResultHost: React.FC = () => {
   );
 };
 
-export default ViewResultHost; 
+export default ViewResultAdmin; 

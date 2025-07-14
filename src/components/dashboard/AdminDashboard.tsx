@@ -1,13 +1,13 @@
 import React from "react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
-import { useGetHostUpcomingExamsQuery, useGetHostPastExamsQuery } from "../../redux/services/api/exam/get/getExamApi";
+import { useGetAdminUpcomingExamsQuery, useGetAdminPastExamsQuery } from "../../redux/services/api/exam/get/getExamApi";
 import { useGetUserListQuery } from "../../redux/services/api/user/get/getUserApi";
 import { CalendarDays, Users, Activity, PlusCircle, ListOrdered, BarChart2, Clock } from "lucide-react";
 
 const adminDashboard: React.FC = () => {
-  const { data: upcomingExams, isLoading: loadingUpcoming, error: errorUpcoming } = useGetHostUpcomingExamsQuery();
-  const { data: pastExams, isLoading: loadingPast, error: errorPast } = useGetHostPastExamsQuery();
+  const { data: upcomingExams, isLoading: loadingUpcoming, error: errorUpcoming } = useGetAdminUpcomingExamsQuery();
+  const { data: pastExams, isLoading: loadingPast, error: errorPast } = useGetAdminPastExamsQuery();
   const { data: userList, isLoading: loadingUsers, error: errorUsers } = useGetUserListQuery();
 
   const activeExams = (upcomingExams || []).filter(e => new Date(e.startingtime) <= new Date());
@@ -15,7 +15,7 @@ const adminDashboard: React.FC = () => {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-primary flex items-center gap-3">
-        <BarChart2 className="w-8 h-8 text-blue-600" /> Host Dashboard
+        <BarChart2 className="w-8 h-8 text-blue-600" /> Admin Dashboard
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card className="p-6 flex flex-col items-center bg-blue-50 shadow-md rounded-xl">

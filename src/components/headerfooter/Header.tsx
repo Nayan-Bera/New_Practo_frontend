@@ -109,7 +109,7 @@ const Header: React.FC<HeaderProps> = () => {
                 : navigate("/dashboard")
             }
           >
-            {userData.type === "admin" ? "Host Portal" : "Candidate Portal"}
+            {userData.type === "admin" ? "Admin Portal" : "Candidate Portal"}
           </span>
         )}
       </div>
