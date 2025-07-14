@@ -1,11 +1,21 @@
-import { AlertCircle, Camera, User as UserIcon } from "lucide-react";
-import React from "react";
+import { AlertCircle, Camera, User as UserIcon, BadgeCheck, GraduationCap, School, BookOpen, Building2, UserCircle2, Trophy, CalendarDays, BarChart3 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { useGetUserAttendedExamsQuery, useGetUserUpcomingExamsQuery } from "../../redux/services/api/exam/get/getExamApi";
 import type { IUser } from "../../types";
-import { getUser } from "../../utils/localStorage";
+import { getUser, addUser } from "../../utils/localStorage";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Progress } from "../../components/ui/progress";
+import { toast } from "sonner";
+import { useUpdateUserMutation } from "../../redux/services/api";
+
+const motivationalQuotes = [
+  "Success is the sum of small efforts, repeated day in and day out.",
+  "Believe in yourself and all that you are.",
+  "The future depends on what you do today.",
+  "Don't watch the clock; do what it does. Keep going.",
+  "Opportunities don't happen, you create them."
+];
 
 const CandidateDashboard: React.FC = () => {
   const { data: upcomingExams, isLoading: loadingUpcoming, error: errorUpcoming } = useGetUserUpcomingExamsQuery();
@@ -32,125 +42,239 @@ const CandidateDashboard: React.FC = () => {
     return "Good evening";
   };
 
+  const [quote, setQuote] = useState("");
+  const [countdown, setCountdown] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const cloudName = import.meta.env.VITE_CLOUDINARY_NAME;
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_PRESET;
+  const [profilePic, setProfilePic] = useState(userData?.profilePicture);
+  const [updateUser] = useUpdateUserMutation();
+
+  useEffect(() => {
+    setQuote(motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]);
+  }, []);
+
+  useEffect(() => {
+    if (!nextExam || !nextExam.startingtime) return;
+    const interval = setInterval(() => {
+      const now = new Date();
+      const start = new Date(nextExam.startingtime);
+      const diff = start.getTime() - now.getTime();
+      if (diff <= 0) {
+        setCountdown("Exam is starting!");
+        clearInterval(interval);
+        return;
+      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      setCountdown(`${hours}h ${minutes}m ${seconds}s`);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [nextExam]);
+
+  useEffect(() => {
+    setProfilePic(userData?.profilePicture);
+  }, [userData]);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+    try {
+      setUploading(true);
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.secure_url) {
+        setProfilePic(data.secure_url);
+        // Update backend
+        await updateUser({ profilePicture: data.secure_url });
+        // Update localStorage user object
+        const userObj = getUser();
+        if (userObj && userObj.user) {
+          userObj.user.profilePicture = data.secure_url;
+          await addUser(userObj);
+          window.dispatchEvent(new Event("userProfileUpdated"));
+        }
+        toast.success("Profile picture updated!");
+      } else {
+        toast.error("Failed to upload image");
+      }
+    } catch (err) {
+      toast.error("Failed to upload image");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-8">
-      {/* Profile Section */}
-      <Card className="p-6 flex flex-col md:flex-row items-center gap-6 mb-4 shadow-lg bg-gradient-to-br from-white to-indigo-50">
-        <div className="relative flex flex-col items-center justify-center">
-          {userData?.profilePicture ? (
-            <img src={userData.profilePicture} alt="Profile" className="w-24 h-24 rounded-full object-cover border-2 border-indigo-400 mb-2 shadow" />
-          ) : (
-            <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 mb-2 text-4xl shadow">
-              {userData?.name ? userData.name[0].toUpperCase() : <UserIcon size={40} />}
-            </div>
-          )}
-          {/* Edit Icon Overlay */}
-          <button
-            className="absolute bottom-2 right-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-1 shadow-lg border-2 border-white"
-            title="Edit Profile Picture"
-            onClick={() => window.location.href='/profile'}
-            style={{ zIndex: 2 }}
-          >
-            <Camera size={18} />
-          </button>
-          <Button variant="outline" size="sm" className="mt-2" onClick={() => window.location.href='/profile'}>Edit Profile</Button>
-        </div>
-        <div className="flex-1 w-full">
-          <div className="text-lg font-semibold mb-1 text-indigo-700">{greeting()}, {userData?.name?.split(' ')[0] || 'Candidate'}!</div>
-          <div className="text-2xl font-bold mb-1">{userData?.name}</div>
-          <div className="text-gray-600 mb-1">{userData?.email}</div>
-          <div className="flex flex-wrap gap-4 text-sm mb-2">
-            <span><b>Education:</b> {userData?.education || <span className="text-red-500">Not set</span>}</span>
-            <span><b>College:</b> {userData?.college || <span className="text-red-500">Not set</span>}</span>
-            <span><b>University:</b> {userData?.university || <span className="text-red-500">Not set</span>}</span>
-            <span><b>Department:</b> {userData?.department || <span className="text-red-500">Not set</span>}</span>
-            <span><b>Course:</b> {userData?.course || <span className="text-red-500">Not set</span>}</span>
-          </div>
-          {/* Profile Completion Bar */}
-          <div className="mb-2">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-sm font-medium">Profile Completion</span>
-              <span className="text-xs text-gray-500">{completion}%</span>
-            </div>
-            <Progress value={completion} className="h-2 transition-all duration-700" />
-            {completion < 100 && (
-              <div className="mt-2 flex flex-col gap-1 text-yellow-700 bg-yellow-50 border-l-4 border-yellow-400 p-2 rounded text-sm">
-                <div className="flex items-center mb-1">
-                  <AlertCircle className="w-4 h-4 mr-2 text-yellow-500" />
-                  Please complete your profile. Missing:
-                </div>
-                <ul className="list-disc list-inside ml-6">
-                  {missingFields.map(f => (
-                    <li key={f}>{f.charAt(0).toUpperCase() + f.slice(1)}</li>
-                  ))}
-                </ul>
+    <div className="px-0 md:px-8 py-8 w-full min-h-[90vh] bg-gradient-to-br from-indigo-50 to-white">
+      {/* Motivational Banner */}
+      <div className="mb-6 p-4 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-50 border-l-4 border-indigo-400 shadow flex items-center gap-3 animate-fade-in max-w-5xl mx-auto">
+        <span className="text-indigo-600 text-xl font-bold">💡</span>
+        <span className="text-indigo-900 font-medium">{quote}</span>
+      </div>
+      {/* Main Profile Card - Full Width Modern Layout */}
+      <div className="max-w-5xl mx-auto w-full bg-white rounded-2xl shadow-xl flex flex-col md:flex-row gap-8 p-8 md:p-12 items-center md:items-start">
+        {/* Left: Avatar & Edit */}
+        <div className="flex flex-col items-center gap-4 w-full md:w-1/3">
+          <div className="relative group">
+            {profilePic ? (
+              <img src={profilePic} alt="Profile" className="w-36 h-36 rounded-full object-cover border-4 border-indigo-400 shadow-lg" />
+            ) : (
+              <div className="w-36 h-36 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 text-6xl border-4 border-indigo-100 shadow-lg">
+                {userData?.name ? userData.name[0].toUpperCase() : <UserIcon size={48} />}
               </div>
             )}
+            {/* Camera icon overlay for upload */}
+            <label
+              className="absolute bottom-2 right-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-2 shadow-lg border-2 border-white transition-transform hover:scale-110 opacity-90 group-hover:opacity-100 cursor-pointer"
+              title="Edit Profile Picture"
+            >
+              <Camera size={22} />
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileChange}
+                disabled={uploading}
+              />
+            </label>
           </div>
-          <span>Completed Exams: <b>{totalExams}</b></span>
+          {/* Separate Edit Profile button */}
+          <Button variant="outline" size="lg" className="w-full text-base font-semibold" onClick={() => window.location.href='/profile'}>
+            Edit Profile
+          </Button>
         </div>
-      </Card>
-
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Next Exam */}
-        <Card className="p-6 flex flex-col items-center">
-          <span className="text-lg font-semibold mb-2">Next Exam</span>
-          <span className="text-2xl font-bold">
-            {loadingUpcoming ? '...' : (nextExam ? nextExam.title : 'No upcoming exam')}
-          </span>
-          <span className="text-gray-500">
-            {loadingUpcoming ? '' : (nextExam ? new Date(nextExam.startingtime).toLocaleString() : '')}
-          </span>
-          {nextExam && <Button className="mt-4" variant="default" onClick={() => window.location.href='/joinexam'}>Join Exam</Button>}
-        </Card>
-        {/* Recent Results */}
-        <Card className="p-6 w-full">
-          <span className="text-lg font-semibold mb-2 block">Recent Results</span>
-          <ul className="divide-y divide-gray-200">
-            {loadingAttended ? (
-              <li className="py-2 text-gray-400">Loading...</li>
-            ) : recentResults.length === 0 ? (
-              <li className="py-2 text-gray-400">No recent results</li>
-            ) : recentResults.map((exam, idx) => (
-              <li key={idx} className="flex items-center justify-between py-2">
-                <div>
-                  <span className="font-medium">{exam.title}</span>
-                  <span className="ml-2 text-xs text-gray-400">{new Date(exam.startingtime).toLocaleDateString()}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-green-600 font-semibold">Completed</span>
-                  <Button size="sm" variant="outline" onClick={() => window.location.href='/candidate/result'}>View</Button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Card>
+        {/* Right: Details & Progress */}
+        <div className="flex-1 w-full flex flex-col gap-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
+            <div className="text-2xl font-bold text-indigo-800 flex items-center gap-2">{greeting()}, {userData?.name?.split(' ')[0] || 'Candidate'}! <UserCircle2 className="text-indigo-400" size={24} /></div>
+          </div>
+          <div className="text-lg font-semibold text-gray-700 mb-1">{userData?.name}</div>
+          <div className="text-gray-600 mb-2 flex items-center gap-2"><BadgeCheck className="text-green-500" size={18} />{userData?.email}</div>
+          {/* Badges Row */}
+          <div className="flex flex-wrap gap-2 mb-2">
+            <span className="flex items-center gap-1 bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm"><GraduationCap size={16} /> {userData?.education || <span className="text-red-500">Not set</span>}</span>
+            <span className="flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"><School size={16} /> {userData?.college || <span className="text-red-500">Not set</span>}</span>
+            <span className="flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"><Building2 size={16} /> {userData?.university || <span className="text-red-500">Not set</span>}</span>
+            <span className="flex items-center gap-1 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm"><BookOpen size={16} /> {userData?.department || <span className="text-red-500">Not set</span>}</span>
+            <span className="flex items-center gap-1 bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm"><Trophy size={16} /> {userData?.course || <span className="text-red-500">Not set</span>}</span>
+          </div>
+          {/* Profile Completion Bar & Warning */}
+          <div className="mb-2 flex items-center gap-4">
+            <div className="flex flex-col flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-medium">Profile Completion</span>
+                <span className="text-xs text-gray-500">{completion}%</span>
+              </div>
+              <Progress value={completion} className="h-2 transition-all duration-700 animate-pulse" />
+            </div>
+          </div>
+          {completion < 100 && (
+            <div className="mt-2 flex flex-col gap-2 text-yellow-900 bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded text-base font-medium shadow-md">
+              <div className="flex items-center mb-2">
+                <AlertCircle className="w-5 h-5 mr-3 text-yellow-600" />
+                <span>Please complete your profile to access all features and exams.</span>
+              </div>
+              <ul className="list-disc list-inside ml-8 text-sm text-yellow-800 mb-2">
+                {missingFields.map(f => (
+                  <li key={f}>{f.charAt(0).toUpperCase() + f.slice(1)}</li>
+                ))}
+              </ul>
+              <Button className="w-fit" variant="default" onClick={() => window.location.href='/profile'}>
+                Complete Profile
+              </Button>
+            </div>
+          )}
+          <span className="mt-2 flex items-center gap-2"><Trophy className="text-yellow-500" size={20} />Completed Exams: <b>{totalExams}</b></span>
+        </div>
       </div>
-
-      {/* Chart placeholder */}
-      <Card className="p-6 mb-8">
-        <h2 className="text-xl font-semibold mb-4">Performance Over Time</h2>
-        <div className="h-32 flex items-center justify-center text-gray-400">[Chart Coming Soon]</div>
-      </Card>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 gap-6">
-        <Card className="p-6">
-          <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-          <div className="flex flex-wrap gap-4">
-            <Button variant="default" onClick={() => window.location.href='/exam'}>View All Exams</Button>
-            <Button variant="outline" onClick={() => window.location.href='/candidate/result'}>View Results</Button>
-            <Button variant="outline" onClick={() => window.location.href='/profile'}>Edit Profile</Button>
+      {/* Main Grid, Chart, Quick Actions, etc. remain unchanged, but use max-w-5xl mx-auto for full width consistency */}
+      <div className="max-w-5xl mx-auto mt-8">
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Next Exam */}
+          <Card className="p-6 flex flex-col items-center bg-gradient-to-br from-indigo-50 to-white shadow-md">
+            <span className="text-lg font-semibold mb-2 flex items-center gap-2"><CalendarDays className="text-indigo-400" size={20} />Next Exam</span>
+            <span className="text-2xl font-bold">
+              {loadingUpcoming ? '...' : (nextExam ? nextExam.title : <span className="flex items-center gap-2 text-gray-400"><BarChart3 size={20}/>No upcoming exam</span>)}
+            </span>
+            <span className="text-gray-500">
+              {loadingUpcoming ? '' : (nextExam ? new Date(nextExam.startingtime).toLocaleString() : '')}
+            </span>
+            {/* Countdown Timer */}
+            {nextExam && <span className="mt-2 text-indigo-700 font-semibold">Starts in: {countdown}</span>}
+            {nextExam && <Button className="mt-4" variant="default" onClick={() => window.location.href='/joinexam'}>Join Exam</Button>}
+            {!nextExam && <span className="mt-4 text-sm text-gray-400">Stay tuned for your next opportunity!</span>}
+          </Card>
+          {/* Recent Results */}
+          <Card className="p-6 w-full bg-gradient-to-br from-white to-indigo-50 shadow-md">
+            <span className="text-lg font-semibold mb-2 flex items-center gap-2"><Trophy className="text-yellow-500" size={20}/>Recent Results</span>
+            <ul className="divide-y divide-gray-200">
+              {loadingAttended ? (
+                <li className="py-2 text-gray-400">Loading...</li>
+              ) : recentResults.length === 0 ? (
+                <li className="py-2 text-gray-400 flex items-center gap-2"><BarChart3 size={18}/>No recent results</li>
+              ) : recentResults.map((exam, idx) => (
+                <li key={idx} className="flex items-center justify-between py-2">
+                  <div>
+                    <span className="font-medium flex items-center gap-2"><BookOpen className="text-indigo-400" size={16}/>{exam.title}</span>
+                    <span className="ml-2 text-xs text-gray-400">{new Date(exam.startingtime).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-600 font-semibold flex items-center gap-1"><BadgeCheck size={14}/>Completed</span>
+                    <Button size="sm" variant="outline" onClick={() => window.location.href='/result'}>View</Button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </div>
+        {/* Performance Chart (Mock) */}
+        <Card className="p-6 mb-8 bg-gradient-to-br from-indigo-50 to-white shadow-md mt-8">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2"><BarChart3 className="text-indigo-400" size={22}/>Performance Over Time</h2>
+          <div className="h-40 flex items-center justify-center">
+            {/* Simple SVG mock chart */}
+            <svg width="90%" height="120" viewBox="0 0 300 120">
+              <polyline
+                fill="none"
+                stroke="#6366f1"
+                strokeWidth="4"
+                points="10,100 50,80 90,60 130,90 170,40 210,70 250,30"
+              />
+              <circle cx="10" cy="100" r="4" fill="#6366f1" />
+              <circle cx="50" cy="80" r="4" fill="#6366f1" />
+              <circle cx="90" cy="60" r="4" fill="#6366f1" />
+              <circle cx="130" cy="90" r="4" fill="#6366f1" />
+              <circle cx="170" cy="40" r="4" fill="#6366f1" />
+              <circle cx="210" cy="70" r="4" fill="#6366f1" />
+              <circle cx="250" cy="30" r="4" fill="#6366f1" />
+            </svg>
           </div>
         </Card>
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 gap-6 mt-8">
+          <Card className="p-6">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2"><UserCircle2 className="text-indigo-400" size={20}/>Quick Actions</h2>
+            <div className="flex flex-wrap gap-4">
+              <Button variant="default" onClick={() => window.location.href='/exam'}><BookOpen className="mr-2" size={16}/>View All Exams</Button>
+              <Button variant="outline" onClick={() => window.location.href='/result'}><Trophy className="mr-2" size={16}/>View Results</Button>
+              <Button variant="outline" onClick={() => window.location.href='/profile'}><UserCircle2 className="mr-2" size={16}/>Edit Profile</Button>
+            </div>
+          </Card>
+        </div>
+        {/* Error Handling */}
+        {((typeof errorUpcoming === 'string' || errorUpcoming instanceof Error) ||
+          (typeof errorAttended === 'string' || errorAttended instanceof Error)) && (
+          <div className="text-red-500 mt-4">Error loading dashboard data.</div>
+        )}
       </div>
-
-      {/* Error Handling */}
-      {((typeof errorUpcoming === 'string' || errorUpcoming instanceof Error) ||
-        (typeof errorAttended === 'string' || errorAttended instanceof Error)) && (
-        <div className="text-red-500 mt-4">Error loading dashboard data.</div>
-      )}
     </div>
   );
 };

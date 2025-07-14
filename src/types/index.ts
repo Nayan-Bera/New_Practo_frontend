@@ -12,6 +12,14 @@ export interface IUser {
   designation: string;
   profilePicture?: string;
   isApproved: boolean;
+  educationHistory: Array<{
+    degree: string;
+    college: string;
+    university: string;
+    department: string;
+    startYear: number;
+    endYear?: number;
+  }>;
   upcomingExams: string[];
   pastExams: string[];
   createdAt: string;

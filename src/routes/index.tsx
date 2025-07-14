@@ -16,6 +16,9 @@ import { getUser } from "../utils/localStorage";
 import Preloader from "../utils/Preloader";
 import { initializeSocket } from "../utils/socket";
 import { PrivateRoute, PublicRoute } from "./PrivateRoute";
+import { Toaster } from 'sonner';
+import ProfilePage from "../components/pages/profile";
+import CandidateResult from "../page/CandidateResult";
 
 const AppRoutes: React.FC = () => {
   useEffect(() => {
@@ -29,6 +32,7 @@ const AppRoutes: React.FC = () => {
 
   return (
     <BrowserRouter>
+      <Toaster />
       <Preloader />
       <Layout>
         <Routes>
@@ -50,11 +54,17 @@ const AppRoutes: React.FC = () => {
             <Route path="/exam/result" element={<ViewResultAdmin />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={["candidate"]} />}>
-            <Route path="/joinexam" element={<CandidateDashboard />} />
+            <Route path="/dashboard" element={<CandidateDashboard />} />
+            <Route path="/result" element={<CandidateResult />} />
           </Route>
 
           {/* Feedback is public */}
           <Route path="/feedback" element={<Feedback />} />
+
+          {/* Profile route */}
+          <Route element={<PrivateRoute allowedRoles={["admin", "candidate"]} />}>
+            <Route path="/profile" element={<ProfilePage />} />
+          </Route>
 
           {/* Catch-all for 404 */}
           <Route path="*" element={<PageNotFound />} />

@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const userData = (getUser() && getUser() !== false) ? (getUser() as { user: IUser }).user : undefined;
+  const [userDataState, setUserDataState] = useState(getUser() ? (getUser() as { user: IUser }).user : undefined);
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -26,6 +26,15 @@ const Header: React.FC<HeaderProps> = () => {
     } else {
       setIsLogin(false);
     }
+  }, []);
+
+  useEffect(() => {
+    const handler = () => {
+      const updated = (getUser() && getUser() !== false) ? (getUser() as { user: IUser }).user : undefined;
+      setUserDataState(updated);
+    };
+    window.addEventListener("userProfileUpdated", handler);
+    return () => window.removeEventListener("userProfileUpdated", handler);
   }, []);
 
   const handleLogout = () => {
@@ -100,26 +109,36 @@ const Header: React.FC<HeaderProps> = () => {
     <div className="w-full flex items-center justify-between h-[10vh] min-h-[50px] px-5 bg-indigo-50 border-b border-indigo-100 shadow-md">
       <div className="flex items-center gap-4">
         <img src={Logo} alt="Logo" style={{ height: "40px" }} className="cursor-pointer" onClick={() => navigate("/")} />
-        {userData && (
+        {userDataState && (
           <span
             className="ml-2 text-lg font-semibold text-indigo-700 tracking-wide cursor-pointer hover:underline hover:text-indigo-900 transition-colors"
-            onClick={() =>
-              userData.type === "admin"
-                ? navigate("/admin")
-                : navigate("/dashboard")
-            }
+            onClick={() => {
+              if (userDataState.type === "admin") navigate("/admin");
+              else if (userDataState.type === "candidate") navigate("/dashboard");
+              // else do nothing
+            }}
           >
-            {userData.type === "admin" ? "Admin Portal" : "Candidate Portal"}
+            {userDataState.type === "admin"
+              ? "Admin Portal"
+              : userDataState.type === "candidate"
+              ? "Candidate Portal"
+              : null}
           </span>
         )}
       </div>
       <div className="flex items-center justify-end gap-4">
-        {isLogin && userData ? (
+        {isLogin && userDataState ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 focus:outline-none">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-xl font-bold ring-1 ring-indigo-200">
-                  {userData.name ? userData.name[0].toUpperCase() : <UserIcon size={24} />}
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-xl font-bold ring-1 ring-indigo-200 overflow-hidden">
+                  {userDataState.profilePicture ? (
+                    <img src={userDataState.profilePicture} alt="Profile" className="w-10 h-10 object-cover rounded-full" />
+                  ) : userDataState.name ? (
+                    userDataState.name[0].toUpperCase()
+                  ) : (
+                    <UserIcon size={24} />
+                  )}
                 </div>
               </button>
             </DropdownMenuTrigger>
@@ -127,8 +146,8 @@ const Header: React.FC<HeaderProps> = () => {
               <DropdownMenuItem onClick={() => navigate("/profile")}> 
                 <Edit2 className="w-4 h-4 mr-2" /> Edit Profile
               </DropdownMenuItem>
-              {userData.type === "admin" && (
-                <DropdownMenuItem onClick={() => navigate("/admin")}> 
+              {(userDataState.type === "admin" || userDataState.type === "candidate") && (
+                <DropdownMenuItem onClick={() => navigate(userDataState.type === "admin" ? "/admin" : "/dashboard")}> 
                   <LayoutDashboard className="w-4 h-4 mr-2" /> Dashboard
                 </DropdownMenuItem>
               )}
