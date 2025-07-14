@@ -82,6 +82,7 @@ const SignIn = () => {
         pastExams: [],
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        educationHistory: [],
       };
 
       await addUser({ token: response.token, user: userData });

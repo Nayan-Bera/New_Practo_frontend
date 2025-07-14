@@ -3,6 +3,7 @@ import { baseApi } from '../../../baseApi';
 interface UpdateUserRequest {
   name?: string;
   email?: string;
+  profilePicture?: string;
 }
 
 interface UpdatePasswordRequest {
@@ -13,8 +14,8 @@ export const updateUserApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     updateUser: builder.mutation<void, UpdateUserRequest>({
       query: (userData) => ({
-        url: '/user',
-        method: 'POST',
+        url: '/user/profile',
+        method: 'PUT',
         body: userData,
       }),
       invalidatesTags: ['User'],

@@ -9,7 +9,7 @@ const getDashboardRoute = (role?: string) => {
     case "host":
       return "/host";
     case "candidate":
-      return "/joinexam";
+      return "/dashboard";
     case "admin":
       return "/admin";
     default:
@@ -42,9 +42,7 @@ export const PrivateRoute: React.FC<IPrivateRouteProps & { allowedRoles?: string
   }
   // Candidate profile completeness check
   if (auth.user?.type === 'candidate' && !isCandidateProfileComplete(auth.user)) {
-    if (location.pathname !== '/profile') {
-      return <Navigate to="/profile" replace state={{ from: location, requireProfile: true }} />;
-    }
+    // (Removed auto-redirect to /profile)
   }
   return <Outlet />;
 };
