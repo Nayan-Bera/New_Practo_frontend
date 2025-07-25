@@ -365,7 +365,7 @@ const CandidateDashboard: React.FC = () => {
                       date: 'Jan 20, 2025',
                       generic: '0% (0/2)',
                     },
-                  ].map((row, idx) => (
+                  ].map((row) => (
                     <tr key={row.name} className="border-b hover:bg-indigo-50/50">
                       <td className="px-3 py-2 flex items-center gap-2">
                         <span className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
@@ -461,7 +461,7 @@ const CandidateDashboard: React.FC = () => {
                     { subject: 'English 1', easy: 40, medium: 30, difficult: 20, hard: 10 },
                     { subject: 'Science 2', easy: 20, medium: 30, difficult: 30, hard: 20 },
                     { subject: 'Economics', easy: 50, medium: 20, difficult: 20, hard: 10 },
-                  ].map((row, idx) => (
+                  ].map((row) => (
                     <div key={row.subject} className="flex items-center gap-2">
                       <span className="w-24 text-xs text-gray-700">{row.subject}</span>
                       <div className="flex-1 flex h-5 rounded overflow-hidden">
