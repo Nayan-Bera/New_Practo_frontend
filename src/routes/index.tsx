@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CandidateDashboard from "../components/dashboard/CandidateDashboard";
-import AdminDashboard from "../components/dashboard/AdminDashboard";
 import Layout from "../components/headerfooter";
 import EditExam from "../page/EditExam";
 import Exam from "../page/Exam";
@@ -19,6 +17,8 @@ import { PrivateRoute, PublicRoute } from "./PrivateRoute";
 import { Toaster } from 'sonner';
 import ProfilePage from "../components/pages/profile";
 import CandidateResult from "../page/CandidateResult";
+import CandidateDashboard from "@/components/dashboard/candidate/CandidateDashboard";
+import SuperAdminDashboard from "@/components/dashboard/superadmin/SuperAdminDashboard";
 
 const AppRoutes: React.FC = () => {
   useEffect(() => {
@@ -47,7 +47,7 @@ const AppRoutes: React.FC = () => {
 
           {/* Private routes */}
           <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin" element={<SuperAdminDashboard />} />
             <Route path="/admin/joinexam" element={<AdminExamJoin />} />
             <Route path="/exam" element={<Exam />} />
             <Route path="/exam/edit" element={<EditExam />} />

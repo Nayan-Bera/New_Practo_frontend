@@ -1,14 +1,13 @@
+import { useGetUserAttendedExamsQuery, useGetUserUpcomingExamsQuery, useUpdateUserMutation } from "@/redux/services/api";
+import type { IUser } from "@/types";
+import { addUser, getUser } from "@/utils/localStorage";
 import { AlertCircle, Camera, User as UserIcon, BadgeCheck, GraduationCap, School, BookOpen, Building2, UserCircle2, Trophy, CalendarDays, BarChart3, Users } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useGetUserAttendedExamsQuery, useGetUserUpcomingExamsQuery } from "../../redux/services/api/exam/get/getExamApi";
-import type { IUser } from "../../types";
-import { getUser, addUser } from "../../utils/localStorage";
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
-import { Progress } from "../../components/ui/progress";
 import { toast } from "sonner";
-import { useUpdateUserMutation } from "../../redux/services/api";
-import DashboardLayout from './DashboardLayout';
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import CandidateLayout from "@/layouts/candidateLayout";
 
 const motivationalQuotes = [
   "Success is the sum of small efforts, repeated day in and day out.",
@@ -123,7 +122,7 @@ const CandidateDashboard: React.FC = () => {
   };
 
   return (
-    <DashboardLayout>
+    <CandidateLayout>
       <div className="p-8 md:p-12 bg-gray-50 min-h-screen">
         {/* Header Section */}
         <div className="mb-8">
@@ -489,7 +488,7 @@ const CandidateDashboard: React.FC = () => {
             )}
           </div>
         </div>
-      </DashboardLayout>
+      </CandidateLayout>
     );
   };
 

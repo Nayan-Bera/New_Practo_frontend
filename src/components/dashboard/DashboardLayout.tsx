@@ -1,5 +1,5 @@
 import React from 'react';
-import SidebarWrapper from './Sidebar';
+import SidebarWrapper from './candidate/Sidebar';
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (

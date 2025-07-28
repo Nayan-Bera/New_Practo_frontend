@@ -1,9 +1,8 @@
 import React from "react";
-import { Card } from "../ui/card";
-import { Button } from "../ui/button";
-import { useGetAdminUpcomingExamsQuery, useGetAdminPastExamsQuery } from "../../redux/services/api/exam/get/getExamApi";
-import { useGetUserListQuery } from "../../redux/services/api/user/get/getUserApi";
 import { CalendarDays, Users, Activity, PlusCircle, ListOrdered, BarChart2, Clock } from "lucide-react";
+import { useGetAdminPastExamsQuery, useGetAdminUpcomingExamsQuery, useGetUserListQuery } from "@/redux/services/api";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const adminDashboard: React.FC = () => {
   const { data: upcomingExams, isLoading: loadingUpcoming, error: errorUpcoming } = useGetAdminUpcomingExamsQuery();
