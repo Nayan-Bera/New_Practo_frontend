@@ -14,18 +14,24 @@ import { getUser } from "../utils/localStorage";
 import Preloader from "../utils/Preloader";
 import { initializeSocket } from "../utils/socket";
 import { PrivateRoute, PublicRoute } from "./PrivateRoute";
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
 import ProfilePage from "../components/pages/profile";
 import CandidateResult from "../page/CandidateResult";
 import CandidateDashboard from "@/components/dashboard/candidate/CandidateDashboard";
 import SuperAdminDashboard from "@/components/dashboard/superadmin/SuperAdminDashboard";
+import CandidateLayout from "@/layouts/candidateLayout";
 
 const AppRoutes: React.FC = () => {
   useEffect(() => {
     // Initialize socket connection if user is logged in
     const userObj = getUser();
     const currentUser = userObj ? userObj.user : undefined;
-    if (currentUser && typeof currentUser === 'object' && 'token' in currentUser && currentUser.token) {
+    if (
+      currentUser &&
+      typeof currentUser === "object" &&
+      "token" in currentUser &&
+      currentUser.token
+    ) {
       initializeSocket();
     }
   }, []);
@@ -62,8 +68,17 @@ const AppRoutes: React.FC = () => {
           <Route path="/feedback" element={<Feedback />} />
 
           {/* Profile route */}
-          <Route element={<PrivateRoute allowedRoles={["admin", "candidate"]} />}>
-            <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            element={<PrivateRoute allowedRoles={["admin", "candidate"]} />}
+          >
+            <Route
+              path="/profile"
+              element={
+                <CandidateLayout>
+                  <ProfilePage />
+                </CandidateLayout>
+              }
+            />
           </Route>
 
           {/* Catch-all for 404 */}
@@ -74,4 +89,4 @@ const AppRoutes: React.FC = () => {
   );
 };
 
-export default AppRoutes; 
+export default AppRoutes;

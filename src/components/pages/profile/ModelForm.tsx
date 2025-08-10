@@ -93,6 +93,7 @@ const ModelForm: React.FC<ModelFormProps> = ({ details, setDetails }) => {
   };
 
   return (
+    
     <div className="flex flex-col w-[40vw]">
       <form>
         <div className="flex flex-col items-center">
