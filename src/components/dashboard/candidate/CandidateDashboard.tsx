@@ -180,7 +180,7 @@ const CandidateDashboard: React.FC = () => {
           />
      
         {/* Motivational Banner */}
-        <div className="mb-8 p-4 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-50 border-l-4 border-indigo-400 shadow flex items-center gap-3 max-w-3xl mx-auto">
+        <div className="mb-8 p-4 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-50 border-l-4 border-indigo-400 shadow flex items-center gap-3 max-w-7xl mx-auto w-full">
           <span className="text-indigo-600 text-xl font-bold">💡</span>
           <span className="text-indigo-900 font-medium">{quote}</span>
         </div>
@@ -200,7 +200,7 @@ const CandidateDashboard: React.FC = () => {
           />
         </div>
         {/* Main Grid, Chart, Quick Actions, etc. remain unchanged, but use max-w-5xl mx-auto for full width consistency */}
-        <div className="max-w-5xl mx-auto mt-8">
+        <div className="max-w-7xl mx-auto mt-8">
           {/* Main Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Next Exam */}

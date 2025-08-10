@@ -25,7 +25,7 @@ export default function CandidateProfileCard({
   totalExams
 }: CandidateProfileCardProps) {
   return (
- <div className="max-w-6xl mx-auto w-full bg-white rounded-2xl shadow-lg p-8 md:p-10">
+ <div className="max-w-7xl mx-auto w-full bg-white rounded-2xl shadow-lg p-8 md:p-10">
   <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start">
 
     {/* Left: Avatar */}
