@@ -20,6 +20,7 @@ import CandidateResult from "../page/CandidateResult";
 import CandidateDashboard from "@/components/dashboard/candidate/CandidateDashboard";
 import SuperAdminDashboard from "@/components/dashboard/superadmin/SuperAdminDashboard";
 import CandidateLayout from "@/layouts/candidateLayout";
+import Settings from "@/page/users/settings/settings";
 
 const AppRoutes: React.FC = () => {
   useEffect(() => {
@@ -62,6 +63,7 @@ const AppRoutes: React.FC = () => {
           <Route element={<PrivateRoute allowedRoles={["candidate"]} />}>
             <Route path="/dashboard" element={<CandidateDashboard />} />
             <Route path="/result" element={<CandidateResult />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
 
           {/* Feedback is public */}
