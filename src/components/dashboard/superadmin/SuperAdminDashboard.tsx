@@ -1,8 +1,8 @@
 import React from "react";
-import { Card } from "../ui/card";
-import { Button } from "../ui/button";
 import { UserCheck, UserX, Shield, Users, Settings } from "lucide-react";
-import { useGetPendingAdminsQuery, useApproveAdminMutation, useRejectAdminMutation } from "../../redux/services/api";
+import { useApproveAdminMutation, useGetPendingAdminsQuery, useRejectAdminMutation } from "@/redux/services/api";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const SuperAdminDashboard: React.FC = () => {
   const { data, isLoading, error, refetch } = useGetPendingAdminsQuery();

@@ -10,18 +10,18 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   
-  // Don't show header and footer on auth pages
-  const isAuthPage = location.pathname === "/signin" || location.pathname === "/signup";
-  
+  // Show header & footer only on landing page
+  const isLandingPage = location.pathname === "/";
+
   return (
     <div className="min-h-screen flex flex-col">
-      {!isAuthPage && <Header />}
-      <main className={`flex-1 flex flex-col ${isAuthPage ? 'overflow-hidden' : 'overflow-auto bg-success'}`}>
+      {isLandingPage && <Header />}
+      <main className={`flex-1 flex flex-col ${isLandingPage ? 'overflow-auto bg-success' : 'overflow-hidden'}`}>
         {children}
       </main>
-      {!isAuthPage && <Footer />}
+      {isLandingPage && <Footer />}
     </div>
   );
 };
 
-export default Layout; 
+export default Layout;

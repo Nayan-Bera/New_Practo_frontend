@@ -1,6 +1,8 @@
+// auth.ts
+
 import type { IUser } from '../types';
 
-interface UserData {
+export interface UserData {
   user: IUser;
   token: string;
 }
@@ -17,7 +19,7 @@ export const addUser = async (data: UserData): Promise<void> => {
 export const getUser = (): UserData | false => {
   const userStr = localStorage.getItem("user");
   if (!userStr) return false;
-  
+
   try {
     const user = JSON.parse(userStr) as UserData;
     return user;
@@ -28,4 +30,9 @@ export const getUser = (): UserData | false => {
 
 export const removeUser = (): void => {
   localStorage.removeItem("user");
-}; 
+};
+
+// Optional: Reusable type guard
+export const isUserData = (data: UserData | false): data is UserData => {
+  return data !== false;
+};
