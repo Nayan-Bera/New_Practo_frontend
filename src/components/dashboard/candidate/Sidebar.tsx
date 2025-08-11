@@ -62,12 +62,12 @@ const candidateSidebarItems = [
   {
     label: 'Settings',
     icon: <Settings size={18} />,
-    to: '/settings', // ✅ Now an accessible route
+    to: '/settings', 
   },
   {
     label: 'Help',
     icon: <HelpCircle size={18} />,
-    to: '#', // Placeholder
+    to: '#', 
   },
 ];
 
