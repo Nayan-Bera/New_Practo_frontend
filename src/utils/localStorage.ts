@@ -16,15 +16,14 @@ export const addUser = async (data: UserData): Promise<void> => {
   });
 };
 
-export const getUser = (): UserData | false => {
+export const getUser = (): UserData | null => {
   const userStr = localStorage.getItem("user");
-  if (!userStr) return false;
+  if (!userStr) return null;
 
   try {
-    const user = JSON.parse(userStr) as UserData;
-    return user;
+    return JSON.parse(userStr) as UserData;
   } catch {
-    return false;
+    return null;
   }
 };
 
@@ -33,6 +32,6 @@ export const removeUser = (): void => {
 };
 
 // Optional: Reusable type guard
-export const isUserData = (data: UserData | false): data is UserData => {
-  return data !== false;
+export const isUserData = (data: UserData | null): data is UserData => {
+  return data !== null;
 };

@@ -53,15 +53,16 @@ const AppRoutes: React.FC = () => {
             <Route path="/signin" element={<SignIn />} />
           </Route>
           {/* Private routes */}
-          <Route element={<PrivateRoute allowedRoles={["candidate", "admin"]} />}>
+          <Route element={<PrivateRoute allowedRoles={[ "admin"]} />}>
             <Route path="/admin" element={<SuperAdminDashboard />} />
             <Route path="/admin/joinexam" element={<AdminExamJoin />} />
-            <Route path="/exam" element={<Exam />} />
+            <Route path="/admin/exam" element={<AdminExam />} />
             <Route path="/exam/edit" element={<EditExam />} />
             <Route path="/exam/result" element={<ViewResultAdmin />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={["candidate"]} />}>
             <Route path="/dashboard" element={<CandidateDashboard />} />
+            <Route path="/candidate/exam" element={<CandidateExam />} />
             <Route path="/result" element={<CandidateResult />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
@@ -80,13 +81,8 @@ const AppRoutes: React.FC = () => {
               }
             />
           </Route>
-          <Route element={<PrivateRoute allowedRoles={["candidate"]} />}>
-            <Route path="/exam" element={<CandidateExam />} />
-          </Route>
-          // Admin exam route
-          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-            <Route path="/admin/exam" element={<AdminExam />} />
-          </Route>
+         
+         
           {/* Catch-all for 404 */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>

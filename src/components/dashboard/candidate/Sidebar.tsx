@@ -31,7 +31,7 @@ const candidateSidebarItems = [
   {
     label: 'Exams',
     icon: <BookOpen size={18} />,
-    to: '/exam',
+    to: '/candidate/exam',
     notification: examNotificationCount,
   },
   {
