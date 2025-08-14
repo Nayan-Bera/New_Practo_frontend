@@ -21,6 +21,8 @@ import CandidateDashboard from "@/components/dashboard/candidate/CandidateDashbo
 import SuperAdminDashboard from "@/components/dashboard/superadmin/SuperAdminDashboard";
 import CandidateLayout from "@/layouts/candidateLayout";
 import Settings from "@/page/users/settings/settings";
+import CandidateExam from "@/page/user/CandidateExam";
+import AdminExam from "@/page/admin/AdminExam";
 
 const AppRoutes: React.FC = () => {
   useEffect(() => {
@@ -45,15 +47,13 @@ const AppRoutes: React.FC = () => {
         <Routes>
           {/* Landing page - public */}
           <Route path="/" element={<Landing />} />
-
           {/* Public routes */}
           <Route element={<PublicRoute />}>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
           </Route>
-
           {/* Private routes */}
-          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route element={<PrivateRoute allowedRoles={["candidate", "admin"]} />}>
             <Route path="/admin" element={<SuperAdminDashboard />} />
             <Route path="/admin/joinexam" element={<AdminExamJoin />} />
             <Route path="/exam" element={<Exam />} />
@@ -65,10 +65,8 @@ const AppRoutes: React.FC = () => {
             <Route path="/result" element={<CandidateResult />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
-
           {/* Feedback is public */}
           <Route path="/feedback" element={<Feedback />} />
-
           {/* Profile route */}
           <Route
             element={<PrivateRoute allowedRoles={["admin", "candidate"]} />}
@@ -82,7 +80,13 @@ const AppRoutes: React.FC = () => {
               }
             />
           </Route>
-
+          <Route element={<PrivateRoute allowedRoles={["candidate"]} />}>
+            <Route path="/exam" element={<CandidateExam />} />
+          </Route>
+          // Admin exam route
+          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin/exam" element={<AdminExam />} />
+          </Route>
           {/* Catch-all for 404 */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
