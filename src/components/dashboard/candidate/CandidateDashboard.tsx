@@ -41,7 +41,7 @@ const CandidateDashboard: React.FC = () => {
     error: errorAttended,
   } = useGetUserAttendedExamsQuery();
   const userData =
-    getUser() && getUser() !== false
+    getUser() && getUser() !== null
       ? (getUser() as { user: IUser }).user
       : undefined;
 
