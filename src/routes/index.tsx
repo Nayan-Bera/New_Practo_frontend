@@ -39,6 +39,9 @@ const AppRoutes: React.FC = () => {
     }
   }, []);
 
+
+  
+
   return (
     <BrowserRouter>
       <Toaster />
