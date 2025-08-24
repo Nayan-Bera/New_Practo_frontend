@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "../components/headerfooter";
 import EditExam from "../page/EditExam";
-import Exam from "../page/Exam";
 import Feedback from "../page/Feedback";
 import AdminExamJoin from "../page/AdminExamJoin";
 import Landing from "../page/Landing";
@@ -20,7 +19,7 @@ import CandidateResult from "../page/CandidateResult";
 import CandidateDashboard from "@/components/dashboard/candidate/CandidateDashboard";
 import SuperAdminDashboard from "@/components/dashboard/superadmin/SuperAdminDashboard";
 import CandidateLayout from "@/layouts/candidateLayout";
-import Settings from "@/page/users/settings/settings";
+import Settings from "@/page/user/settings/settings";
 import CandidateExam from "@/page/user/CandidateExam";
 import AdminExam from "@/page/admin/AdminExam";
 
