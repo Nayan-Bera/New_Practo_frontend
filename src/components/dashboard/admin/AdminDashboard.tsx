@@ -3,6 +3,7 @@ import { CalendarDays, Users, Activity, PlusCircle, ListOrdered, BarChart2, Cloc
 import { useGetAdminPastExamsQuery, useGetAdminUpcomingExamsQuery, useGetUserListQuery } from "@/redux/services/api";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import AdminLayout from "@/layouts/adminLayout";
 
 const AdminDashboard: React.FC = () => {
   const { data: upcomingExams, isLoading: loadingUpcoming, error: errorUpcoming } = useGetAdminUpcomingExamsQuery();
@@ -12,6 +13,7 @@ const AdminDashboard: React.FC = () => {
   const activeExams = (upcomingExams || []).filter(e => new Date(e.startingtime) <= new Date());
 
   return (
+   < AdminLayout>
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-primary flex items-center gap-3">
         <BarChart2 className="w-8 h-8 text-blue-600" /> Admin Dashboard
@@ -92,6 +94,7 @@ const AdminDashboard: React.FC = () => {
         <div className="text-red-500 mt-4">Error loading dashboard data.</div>
       )}
     </div>
+   </AdminLayout>
   );
 };
 
