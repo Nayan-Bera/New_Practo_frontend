@@ -4,7 +4,7 @@ import { useGetAdminPastExamsQuery, useGetAdminUpcomingExamsQuery, useGetUserLis
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const adminDashboard: React.FC = () => {
+const AdminDashboard: React.FC = () => {
   const { data: upcomingExams, isLoading: loadingUpcoming, error: errorUpcoming } = useGetAdminUpcomingExamsQuery();
   const { data: pastExams, isLoading: loadingPast, error: errorPast } = useGetAdminPastExamsQuery();
   const { data: userList, isLoading: loadingUsers, error: errorUsers } = useGetUserListQuery();
@@ -95,4 +95,4 @@ const adminDashboard: React.FC = () => {
   );
 };
 
-export default adminDashboard; 
+export default AdminDashboard; 

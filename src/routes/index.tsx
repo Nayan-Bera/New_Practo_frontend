@@ -22,6 +22,7 @@ import CandidateLayout from "@/layouts/candidateLayout";
 import Settings from "@/page/user/settings/settings";
 import CandidateExam from "@/page/user/CandidateExam";
 import AdminExam from "@/page/admin/AdminExam";
+import AdminDashboard from "@/components/dashboard/admin/AdminDashboard";
 
 const AppRoutes: React.FC = () => {
   useEffect(() => {
@@ -56,6 +57,13 @@ const AppRoutes: React.FC = () => {
           </Route>
           {/* Private routes */}
           <Route element={<PrivateRoute allowedRoles={[ "admin"]} />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/joinexam" element={<AdminExamJoin />} />
+            <Route path="/admin/exam" element={<AdminExam />} />
+            <Route path="/exam/edit" element={<EditExam />} />
+            <Route path="/exam/result" element={<ViewResultAdmin />} />
+          </Route>
+          <Route element={<PrivateRoute allowedRoles={[ "superadmin"]} />}>
             <Route path="/admin" element={<SuperAdminDashboard />} />
             <Route path="/admin/joinexam" element={<AdminExamJoin />} />
             <Route path="/admin/exam" element={<AdminExam />} />

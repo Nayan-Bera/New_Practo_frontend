@@ -88,11 +88,11 @@ const SignIn = () => {
       await addUser({ token: response.token, user: userData });
       toast.success("Successfully signed in!");
       if (userData.type === "admin") {
-        // handle admin logic here
+        navigate("/admin");
       } else if (userData.type === "candidate") {
         navigate("/joinexam");
       } else {
-        navigate("/"); // fallback
+        navigate("/"); 
       }
     } catch (error) {
       toast.error("Failed to sign in. Please check your credentials.");
